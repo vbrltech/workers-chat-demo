@@ -24,11 +24,11 @@ body {
 #chatlog {
   position: fixed;
   top: 0;
-  bottom: 32px;
+  bottom: 48px;
   left: 0;
   right: 200px;
   overflow-y: auto;
-  padding: 8px;
+  padding: 12px;
   overflow-wrap: break-word;
 }
 #chatlog span.username {
@@ -67,33 +67,6 @@ p:last-of-type {
 @media(max-width:600px) {
   #roster { display: none; }
   #chatlog { right: 0; }
-}
-
-#chat-input {
-  position: fixed;
-  width: 100%;
-  height: 32px;
-  bottom: 0;
-  left: 0;
-  border: none;
-  border-top: none;
-  padding-left: 32px;
-  outline: none;
-}
-#chatroom::before {
-  z-index: 1;
-  display: block;
-  content: ">";
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-  font-weight: bold;
-  color: #888;
-  -webkit-text-stroke-width: 2px;
 }
 
 #name-form {
@@ -170,6 +143,7 @@ p:last-of-type {
 }
 
 </style>
+  <link rel="stylesheet" href="styles/style.css">
 
 <!--===================================================================================-->
 <!-- The actual HTML. There is not much of it. -->
@@ -187,12 +161,16 @@ p:last-of-type {
       <p>OR</p>
       <button id="go-private">Create a Private Room &raquo;</button>
     </form>
-    <form id="chatroom" action="/fake-form-action">
-      <div id="chatlog">
+    <form id="chatroom" class="chatroom" action="/fake-form-action">
+      <div id="chatlog" class="chatlog">
         <div id="spacer"></div>
       </div>
-      <div id="roster"></div>
-      <input id="chat-input">
+      <!-- <div id="roster" class="roster"></div> -->
+      <div class="input-wrapper">
+        <button id="send-button" class="send-button">Send</button>
+
+        <input id="chat-input" class="chat-input">
+      </div>
     </form>
   </body>
 
