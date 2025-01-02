@@ -251,7 +251,7 @@ function startChat() {
   // If no username (viewer only), disable chat input
   if (!username) {
     chatInput.disabled = true;
-    chatInput.placeholder = "Please login to participate in chat";
+    chatInput.placeholder = "Please login to chat";
     document.querySelector("#send-button").disabled = true;
     addChatMessage(null, "* You must be logged in to send messages in this chat.");
   }
