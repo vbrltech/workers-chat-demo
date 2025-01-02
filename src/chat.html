@@ -204,6 +204,18 @@ if (hostname == "") {
 }
 
 function startNameChooser() {
+  // Check for username in URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlUsername = urlParams.get('username');
+  
+  if (urlUsername) {
+    // If username is provided in URL, use it and skip to room chooser
+    username = urlUsername;
+    startRoomChooser();
+    return;
+  }
+
+  // Original name chooser code for when no username is provided
   nameForm.addEventListener("submit", event => {
     event.preventDefault();
     username = nameInput.value;
