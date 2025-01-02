@@ -311,10 +311,24 @@ function startChat() {
     }
   });
 
+  // Check if username was provided in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlUsername = urlParams.get('username');
+
+  if (!urlUsername) {
+    // If no username in URL, disable chat input and add message
+    chatInput.disabled = true;
+    chatInput.placeholder = "Please login to participate in chat";
+    document.querySelector("#send-button").disabled = true;
+  } else {
+    chatInput.placeholder = "Type a message...";
+  }
+
   chatroom.addEventListener("submit", event => {
     event.preventDefault();
 
-    if (currentWebSocket) {
+    // Only allow sending if username exists
+    if (currentWebSocket && username) {
       currentWebSocket.send(JSON.stringify({message: chatInput.value}));
       chatInput.value = "";
 
@@ -333,14 +347,19 @@ function startChat() {
     isAtBottom = chatlog.scrollTop + chatlog.clientHeight >= chatlog.scrollHeight;
   });
 
-  chatInput.focus();
-  document.body.addEventListener("click", event => {
-    // If the user clicked somewhere in the window without selecting any text, focus the chat
-    // input.
-    if (window.getSelection().toString() == "") {
-      chatInput.focus();
-    }
-  });
+  // Only focus input if username exists
+  if (username) {
+    chatInput.focus();
+  }
+
+  // Only add click-to-focus handler if username exists
+  if (username) {
+    document.body.addEventListener("click", event => {
+      if (window.getSelection().toString() == "") {
+        chatInput.focus();
+      }
+    });
+  }
 
   // Detect mobile keyboard appearing and disappearing, and adjust the scroll as appropriate.
   if('visualViewport' in window) {
