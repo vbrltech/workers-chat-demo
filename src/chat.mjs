@@ -60,6 +60,7 @@
 // available for assets served this way is very limited; larger sites should continue to use Workers
 // KV to serve assets.)
 import HTML from "./chat.html";
+import CSS from "./styles/style.css"
 
 // `handleErrors()` is a little utility function that can wrap an HTTP request handler in a
 // try/catch and return errors to the client. You probably wouldn't want to use this in production
@@ -100,8 +101,14 @@ export default {
       let path = url.pathname.slice(1).split('/');
 
       if (!path[0]) {
-        // Serve our HTML at the root path.
-        return new Response(HTML, {headers: {"Content-Type": "text/html;charset=UTF-8"}});
+        // Inject the CSS into the HTML
+        const htmlWithStyles = new TextDecoder().decode(HTML).replace(
+          '</head>',
+          `<style>${new TextDecoder().decode(CSS)}</style></head>`
+        );
+        return new Response(htmlWithStyles, {
+          headers: {"Content-Type": "text/html;charset=UTF-8"}
+        });
       }
 
       switch (path[0]) {
