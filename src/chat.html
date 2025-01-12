@@ -19,6 +19,7 @@
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: transparent;  
 }
 
 #chatlog {
@@ -26,10 +27,33 @@ body {
   top: 0;
   bottom: 48px;
   left: 0;
-  right: 200px;
+  right: 0;  
   overflow-y: auto;
   padding: 12px;
   overflow-wrap: break-word;
+  background: transparent;  
+}
+.chatroom {
+  height: 100vh;  /* Make chatroom fill the entire viewport height */
+}
+.input-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(203, 215, 255, 0.10);  /* Semi-transparent input background */
+  padding: 8px;
+}
+#chat-input {
+  background: rgba(203, 215, 255, 0.15);  /* Semi-transparent input background */
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+#chatlog span.username {
+  color: #FFFFFF;
+}
+#chatlog p {
+  color: #AFAFAF;
 }
 #chatlog span.username {
   font-weight: bold;
@@ -376,13 +400,6 @@ function join() {
       // All pre-join messages have been delivered.
       if (!wroteWelcomeMessages) {
         wroteWelcomeMessages = true;
-        if (roomname.length == 64) {
-          addChatMessage(null,
-              "* This is a private room. You can invite someone to the room by sending them the URL.");
-        } else {
-          addChatMessage(null,
-              "* Welcome to #" + roomname + ". Say hi!");
-        }
       }
     } else {
       // A regular chat message.
